@@ -1,7 +1,7 @@
 {
     "author": "Yanick Schraner",
-    "email": "yanick.schraner@gmail.com",
-    "author_github_handle": "yanickschraner",
+    "email": "yanick.schraner@bs.ch",
+    "author_github_handle": "DCC-BS",
     "project_name": "example-project",
     "project_slug": "{{cookiecutter.project_name|lower|replace('-', '_')}}",
     "project_description": "This is a template repository for Python projects that use uv for their dependency management.",
