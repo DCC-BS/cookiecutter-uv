@@ -35,13 +35,6 @@ from <project_slug> import foo
 
 A short description of your project.
 
-**layout**
-
-`"flat"` or `"src"`, defaults to `"flat"`.
-
-- `"flat"`: Places the Python module in the root directory.
-- `"src"`: Organizes the project by placing the Python module inside a `src` directory.
-
 **include_github_actions**
 
 `"y"` or `"n"`. Adds a `.github` directory with various actions and
@@ -83,6 +76,6 @@ will be deployed to the `gh-pages` branch.
 **open_source_license**
 
 Choose a [license](https://choosealicense.com/). Options:
-`["1. MIT License", "2. BSD license", "3. ISC license",  "4. Apache Software License 2.0", "5. GNU General Public License v3", "6. Not open source"]`
+`["1. MIT License", "2. BSD license", "3. Not open source"]`
 
 ---

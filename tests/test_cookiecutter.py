@@ -33,23 +33,6 @@ def test_using_pytest(cookies, tmp_path):
             assert subprocess.check_call(shlex.split("uv run make test")) == 0
 
 
-def test_src_layout_using_pytest(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"layout": "src"})
-
-        # Assert that project was created.
-        assert result.exit_code == 0
-        assert result.exception is None
-        assert result.project_path.name == "example-project"
-        assert result.project_path.is_dir()
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-
-        # Install the uv environment and run the tests.
-        with run_within_dir(str(result.project_path)):
-            assert subprocess.check_call(shlex.split("uv sync")) == 0
-            assert subprocess.check_call(shlex.split("uv run make test")) == 0
-
-
 def test_devcontainer(cookies, tmp_path):
     """Test that the devcontainer files are created when devcontainer=y"""
     with run_within_dir(tmp_path):
@@ -164,7 +147,7 @@ def test_remove_release_workflow(cookies, tmp_path):
 
 def test_license_mit(cookies, tmp_path):
     with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"open_source_license": "MIT license"})
+        result = cookies.bake(extra_context={"open_source_license": "MIT"})
         assert result.exit_code == 0
         assert os.path.isfile(f"{result.project_path}/LICENSE")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_BSD")
@@ -178,7 +161,7 @@ def test_license_mit(cookies, tmp_path):
 
 def test_license_bsd(cookies, tmp_path):
     with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"open_source_license": "BSD license"})
+        result = cookies.bake(extra_context={"open_source_license": "BSD-3-Clause"})
         assert result.exit_code == 0
         assert os.path.isfile(f"{result.project_path}/LICENSE")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")
@@ -190,51 +173,9 @@ def test_license_bsd(cookies, tmp_path):
             assert len(content) == 28
 
 
-def test_license_isc(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"open_source_license": "ISC license"})
-        assert result.exit_code == 0
-        assert os.path.isfile(f"{result.project_path}/LICENSE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_BSD")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_APACHE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_GPL")
-        with open(f"{result.project_path}/LICENSE", encoding="utf8") as licfile:
-            content = licfile.readlines()
-            assert len(content) == 7
-
-
-def test_license_apache(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"open_source_license": "Apache Software License 2.0"})
-        assert result.exit_code == 0
-        assert os.path.isfile(f"{result.project_path}/LICENSE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_BSD")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_ISC")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_GPL")
-        with open(f"{result.project_path}/LICENSE", encoding="utf8") as licfile:
-            content = licfile.readlines()
-            assert len(content) == 202
-
-
-def test_license_gplv3(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"open_source_license": "GNU General Public License v3"})
-        assert result.exit_code == 0
-        assert os.path.isfile(f"{result.project_path}/LICENSE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_BSD")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_ISC")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_APACHE")
-        with open(f"{result.project_path}/LICENSE", encoding="utf8") as licfile:
-            content = licfile.readlines()
-            assert len(content) == 674
-
-
 def test_license_no_license(cookies, tmp_path):
     with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"open_source_license": "Not open source"})
+        result = cookies.bake(extra_context={"open_source_license": "Unlicense"})
         assert result.exit_code == 0
         assert not os.path.isfile(f"{result.project_path}/LICENSE")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")

@@ -22,10 +22,6 @@ Homepage = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutt
 Repository = "https://github.com/{{cookiecutter.author_github_handle}}/{{cookiecutter.project_name}}"
 Documentation = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutter.project_name}}/"
 
-dependencies = [
-    "version-pioneer>=0.0.13",
-]
-
 [dependency-groups]
 dev = [
     "coverage>=7.6.12",
@@ -42,7 +38,7 @@ dev = [
 ]
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling","version-pioneer>=0.0.13"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]

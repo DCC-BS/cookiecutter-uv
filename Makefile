@@ -4,7 +4,7 @@ bake: ## bake without inputs and overwrite if exists.
 
 .PHONY: bake-src
 bake-src: ## bake without inputs and overwrite if exists.
-	@uv run cookiecutter --no-input . --overwrite-if-exists layout="src"
+	@uv run cookiecutter --no-input . --overwrite-if-exists
 
 .PHONY: bake-with-inputs
 bake-with-inputs: ## bake with inputs and overwrite if exists.
@@ -43,10 +43,10 @@ check: ## Run code quality tools.
 	@uv lock --locked
 	@echo "🚀 Linting code: Running pre-commit"
 	@uv run pre-commit run -a
-	@echo "🚀 Static type checking: Running mypy"
-	@uv run mypy
+	@echo "🚀 Static type checking: Running basedpyright"
+	@uv run basedpyright
 	@echo "🚀 Checking for obsolete dependencies: Running deptry"
-	@uv run deptry {% if cookiecutter.layout == "src" %}"src"{% else %}.{% endif %}
+	@uv run deptry "src"
 
 .PHONY: test
 test: ## Test the code with pytest.

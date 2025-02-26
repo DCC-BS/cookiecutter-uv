@@ -13,6 +13,18 @@
 
 ## Getting started with your project
 
+#### Pre-requisites
+
+Windows
+- Install [Git for Windows](https://git-scm.com/downloads/win)
+- Install [Scoop](https://scoop.sh/)
+- Install make: `scoop install make`
+
+General
+- Install [VSCode](https://code.visualstudio.com/)
+- Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+
+
 ### 1. Create a New Repository
 
 First, create a repository on GitHub with the same name as this project, and then run the following commands:

@@ -65,24 +65,22 @@ preview = true
 "tests/*" = ["S101"]
 ```
 
-# mypy
+# basedpyright
 
-[mypy](https://mypy.readthedocs.io/en/stable/) is used for static type checking, and it's configuration and can be edited in `pyproject.toml`.
+[basedpyright](https://docs.basedpyright.com) is used for static type checking, and it's configuration and can be edited in `pyproject.toml`.
 
 ```toml
-[tool.mypy]
-disallow_untyped_defs = true
-disallow_any_unimported = true
-no_implicit_optional = true
-check_untyped_defs = true
-warn_return_any = true
-warn_unused_ignores = true
-show_error_codes = true
-exclude = [
-    '\.venv',
-    '{{cookiecutter.project_name}}',
-    'tests'
+[tool.basedpyright]
+include = [
+    "src"
 ]
+exclude = [
+    "**/__pycache__",
+    "**/.venv",
+    "**/.*"
+]
+defineConstant = { DEBUG = true }
+pythonVersion = "3.12"
 ```
 
 # deptry
