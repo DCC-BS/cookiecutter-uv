@@ -18,4 +18,4 @@ COPY . /app
 # Sync the project
 RUN uv sync --frozen
 
-CMD [ "python", "{{cookiecutter.project_slug}}/foo.py" ]
+CMD [ "python", "src/{{cookiecutter.project_slug}}/foo.py" ]
