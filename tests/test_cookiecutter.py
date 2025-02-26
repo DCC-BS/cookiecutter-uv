@@ -151,9 +151,6 @@ def test_license_mit(cookies, tmp_path):
         assert result.exit_code == 0
         assert os.path.isfile(f"{result.project_path}/LICENSE")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_BSD")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_ISC")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_APACHE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_GPL")
         with open(f"{result.project_path}/LICENSE", encoding="utf8") as licfile:
             content = licfile.readlines()
             assert len(content) == 21
@@ -165,9 +162,6 @@ def test_license_bsd(cookies, tmp_path):
         assert result.exit_code == 0
         assert os.path.isfile(f"{result.project_path}/LICENSE")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_ISC")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_APACHE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_GPL")
         with open(f"{result.project_path}/LICENSE", encoding="utf8") as licfile:
             content = licfile.readlines()
             assert len(content) == 28
@@ -180,6 +174,3 @@ def test_license_no_license(cookies, tmp_path):
         assert not os.path.isfile(f"{result.project_path}/LICENSE")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_MIT")
         assert not os.path.isfile(f"{result.project_path}/LICENSE_BSD")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_ISC")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_APACHE")
-        assert not os.path.isfile(f"{result.project_path}/LICENSE_GPL")

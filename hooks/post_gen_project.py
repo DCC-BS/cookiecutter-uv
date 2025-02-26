@@ -48,20 +48,11 @@ if __name__ == "__main__":
     if "{{cookiecutter.open_source_license}}" == "MIT":
         move_file("LICENSE_MIT", "LICENSE")
         remove_file("LICENSE_BSD")
-        remove_file("LICENSE_ISC")
-        remove_file("LICENSE_APACHE")
-        remove_file("LICENSE_GPL")
 
     if "{{cookiecutter.open_source_license}}" == "BSD-3-Clause":
         move_file("LICENSE_BSD", "LICENSE")
         remove_file("LICENSE_MIT")
-        remove_file("LICENSE_ISC")
-        remove_file("LICENSE_APACHE")
-        remove_file("LICENSE_GPL")
 
     if "{{cookiecutter.open_source_license}}" == "Unlicense":
-        remove_file("LICENSE_GPL")
         remove_file("LICENSE_MIT")
         remove_file("LICENSE_BSD")
-        remove_file("LICENSE_ISC")
-        remove_file("LICENSE_APACHE")
