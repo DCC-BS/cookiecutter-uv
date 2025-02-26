@@ -1,1 +1,1 @@
-::: {{cookiecutter.project_slug}}.foo
+::: src.{{cookiecutter.project_slug}}.foo
