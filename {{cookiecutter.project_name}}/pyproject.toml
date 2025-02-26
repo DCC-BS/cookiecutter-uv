@@ -156,3 +156,4 @@ exclude_lines =
 exclude_also =
     @(abc\. )?abstractmethod
     @(abc\. )?abstractproperty
+{% endif %}
