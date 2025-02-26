@@ -115,7 +115,6 @@ ignore = [
 [tool.ruff.format]
 preview = true
 indent-style = "space"
-indent-width = 4
 quote-style = "double"
 skip-magic-trailing-comma = false
 line-ending = "auto"

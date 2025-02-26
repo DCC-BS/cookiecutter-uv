@@ -1,4 +1,4 @@
-from src/{{cookiecutter.project_slug}}.foo import foo
+from src.{{cookiecutter.project_slug}}.foo import foo
 
 
 def test_foo():
