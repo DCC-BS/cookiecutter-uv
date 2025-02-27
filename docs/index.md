@@ -23,7 +23,7 @@ This is a modern Cookiecutter template that can be used to initiate a Python pro
 - Containerization with [Docker](https://www.docker.com/)
 - Development environment with [VSCode devcontainers](https://code.visualstudio.com/docs/devcontainers/containers)
 
-An example of a repository generated with this package can be found [here](https://github.com/fpgmaas/cookiecutter-uv-example).
+An example of a repository generated with this package can be found [here](https://github.com/DCC-BS/example-project).
 
 ## Quickstart
 
@@ -32,7 +32,7 @@ create a project directory, and run the following command:
 
 ```bash
   uvx cookiecutter https://github.com/DCC-BS/cookiecutter-uv.git
-  ```
+```
 
 or if you don't have `uv` installed yet:
 

@@ -20,7 +20,7 @@ This is a modern Cookiecutter template that can be used to initiate a Python pro
 ---
 
 <p align="center">
-  <a href="https://fpgmaas.github.io/cookiecutter-uv/">Documentation</a> - <a href="https://github.com/fpgmaas/cookiecutter-uv-example">Example</a>
+  <a href="https://dcc-bs.github.io/cookiecutter-uv/">Documentation</a> - <a href="https://github.com/DCC-BS/example-project">Example</a>
 </p>
 
 ---

@@ -122,6 +122,7 @@ Then navigate to `Settings > Code and Automation > Pages`. If you succesfully cr
 you should see a notification saying ` Your site is ready to be published at https://<author_github_handle>.github.io/<project_name>/`.
 
 To finalize deploying your documentation, under `Source`, select the branch `gh-pages`.
+Do not change the directory, just leave it as `/`.
 
 ## Step 12: You're all set!
 
