@@ -25,4 +25,3 @@ repos:
       - id: ruff-format
         args: [--config=pyproject.toml]
         exclude: ^{{cookiecutter.project_name}}
-
