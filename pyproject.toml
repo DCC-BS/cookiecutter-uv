@@ -2,10 +2,10 @@
 name = "cookiecutter-uv"
 version = "0.0.1"
 description = "A python cookiecutter application to create a new python project that uses uv to manage its dependencies."
-authors = [{ name = "Florian Maas", email = "fpgmaas@gmail.com" }]
+authors = [{ name = "Yanick Schraner", email = "yanick.schraner@gmail.com" }]
 readme = "README.md"
 keywords = ['cookiecutter', 'template', 'uv']
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -86,7 +86,7 @@ extend_exclude = [
 DEP002 = ["cookiecutter"]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py312"
 line-length = 120
 fix = true
 
