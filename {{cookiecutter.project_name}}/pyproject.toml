@@ -19,6 +19,8 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
+    "python-dotenv>=1.0.1",
+    "structlog>=25.1.0",
     "version-pioneer>=0.0.13",
 ]
 
@@ -40,6 +42,7 @@ dev = [
     {% if cookiecutter.mkdocs == 'y' %}"mkdocs>=1.4.2",
     "mkdocs-material>=8.5.10",
     "mkdocstrings[python]>=0.26.1",{% endif %}
+    "rich>=13.9.4"
 ]
 
 [build-system]
