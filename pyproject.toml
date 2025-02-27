@@ -20,7 +20,8 @@ classifiers = [
     "Topic :: Software Development :: Code Generators",
 ]
 dependencies = [
-  "cookiecutter>=2.1.1"
+  "cookiecutter>=2.1.1",
+  "version-pioneer>=0.0.13",
 ]
 
 [project.urls]

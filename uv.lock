@@ -213,6 +213,7 @@ version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "cookiecutter" },
+    { name = "version-pioneer" },
 ]
 
 [package.dev-dependencies]
@@ -231,7 +232,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "cookiecutter", specifier = ">=2.1.1" }]
+requires-dist = [
+    { name = "cookiecutter", specifier = ">=2.1.1" },
+    { name = "version-pioneer", specifier = ">=0.0.13" },
+]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1246,6 +1250,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/88/e4/4aeb7c0e03b8315a918fb35ee701a8c21b8c42296772739ec149419c76cb/uv-0.5.9-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:ee37165a9b03d7cd07dab8272e5cd5c36da30a54b28f08f301a0ee67526e9006", size = 15096613 },
     { url = "https://files.pythonhosted.org/packages/3a/6a/5eb8ef69490c59bc3f62c4e4a1063c323794b440479d3501577dc949aea7/uv-0.5.9-py3-none-win32.whl", hash = "sha256:f7046bc8a7b4c2fba22908025c59121c0ce2ce5bd9a45f1ed76023ff3eba06e5", size = 14435392 },
     { url = "https://files.pythonhosted.org/packages/f4/30/e260f5bdeed81ff0e9ac5f3fa326234ac98eb455830504febd9d440f20b8/uv-0.5.9-py3-none-win_amd64.whl", hash = "sha256:18ec1248a6d027f89d9ffb51079227373f3af42ca0d3f684047aec81793657d6", size = 16212276 },
+]
+
+[[package]]
+name = "version-pioneer"
+version = "0.0.13"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/61/56/aafde3e86876a3753b70988c3a6d07933ca83c5a9c75135f860ae04fd95e/version_pioneer-0.0.13.tar.gz", hash = "sha256:6d4a1c08f3ad88714d99ffc6b54faccf22cca26c1807388aedc3c063c3648b5f", size = 61611 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/d4/043a7c105fe01a287b03749dc7979db10c0ed77f6c5d0a6721644f312ba0/version_pioneer-0.0.13-py3-none-any.whl", hash = "sha256:c18c35836c17fe236eaa35eea8d4b26d67595e26bfbfbf6136e0ca0522d0195a", size = 48509 },
 ]
 
 [[package]]
