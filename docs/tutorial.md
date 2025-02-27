@@ -17,7 +17,7 @@ On your local machine, navigate to the directory in which you want to
 create a project directory, and run the following command:
 
 ```bash
-uvx cookiecutter https://github.com/fpgmaas/cookiecutter-uv.git
+uvx cookiecutter https://github.com/DCC-BS/cookiecutter-uv.git
 ```
 
 For an explanation of the prompt arguments, see
@@ -25,10 +25,10 @@ For an explanation of the prompt arguments, see
 
 ## Step 3: Set up your Github repository
 
-Create an empty [new repository](https://github.com/new) on Github. Give
-it a name that only contains alphanumeric characters and optionally `-`.
-DO NOT check any boxes under the option `Initialize this repository
-with`.
+Create an empty [new repository](https://github.com/new) on Github. 
+Use Data Competence Center as organization. Give it a name that only
+contains alphanumeric characters and optionally `-`. **DO NOT** check any
+boxes under the option `Initialize this repository with`.
 
 ## Step 4: Upload your project to Github
 
@@ -60,6 +60,16 @@ make install
 
 This will generate the `uv.lock` file
 
+On windows you may first need to install the `make` command.
+If you have scoop installed, you can do this with:
+
+```bash
+scoop install make
+```
+
+If you don't have scoop installed, see instructions [here](https://scoop.sh/).
+
+
 ### Step 6: Run the pre-commit hooks
 
 Now, to resolve the formatting issues, let's run the pre-commit hooks:
@@ -82,6 +92,9 @@ git push origin main
 
 If you enabled code coverage with codecov for your project, you should sign up with your GitHub account at [codecov.io](https://about.codecov.io/language/python/)
 
+For the Data Competence Center, the codecov token is already set up for the organization.
+You may need to add the repository to codecov.
+
 ## Step 9: Configure your repository secrets
 
 If you want to deploy your project to PyPI using the
@@ -91,6 +104,8 @@ instructions on how to do that, see [here](./features/publishing.md#set-up-for-p
 ## Step 10: Enable your documentation
 
 To enable your documentation on GitHub, first navigate to `Settings > Actions > General` in your repository, and under `Workflow permissions` select `Read and write permissions`.
+
+For the Data Competence Center, the documentation is already enabled for the organization.
 
 ## Step 11: Create a new release
 
