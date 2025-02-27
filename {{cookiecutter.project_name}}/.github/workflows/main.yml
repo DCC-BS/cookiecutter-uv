@@ -56,20 +56,20 @@ jobs:
       - name: Check typing
         run: uv run basedpyright
 
-{% if cookiecutter.codecov == "y" %}
+  {% if cookiecutter.codecov == "y" %}
       - name: Upload coverage reports to Codecov with GitHub Action on Python 3.12
         uses: codecov/codecov-action@v5
         if: {% raw %}${{ matrix.python-version == '3.12' }}{% endraw %}
         with:
-            token: ${{ secrets.CODECOV_TOKEN }}
+            token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
             files: coverage.xml
 
       - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
+        if: {% raw %}${{ !cancelled() }}{% endraw %}
         uses: codecov/test-results-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-{%- endif %}
+          token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+  {%- endif %}
 
 {%- if cookiecutter.mkdocs == "y" %}
 
