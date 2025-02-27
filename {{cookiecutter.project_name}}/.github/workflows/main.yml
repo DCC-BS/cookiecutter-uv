@@ -43,16 +43,32 @@ jobs:
         with:
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
 
+  {% if cookiecutter.codecov == "y" %}
       - name: Run tests
-        run: uv run python -m pytest tests {% if cookiecutter.codecov == "y" %}--cov --cov-config=pyproject.toml --cov-report=xml{%- endif %}
+        run: |
+            uv run pytest --cov-branch --cov-report=xml --cov --junitxml=junit.xml -o junit_family=legacy
+            uv run coverage xml -o coverage.xml
+  {% else %}
+      - name: Run tests
+        run: uv run pytest tests
+  {% endif %}
 
       - name: Check typing
         run: uv run basedpyright
 
 {% if cookiecutter.codecov == "y" %}
       - name: Upload coverage reports to Codecov with GitHub Action on Python 3.12
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         if: {% raw %}${{ matrix.python-version == '3.12' }}{% endraw %}
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            files: coverage.xml
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 {%- endif %}
 
 {%- if cookiecutter.mkdocs == "y" %}
