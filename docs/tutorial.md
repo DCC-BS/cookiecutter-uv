@@ -25,7 +25,7 @@ For an explanation of the prompt arguments, see
 
 ## Step 3: Set up your Github repository
 
-Create an empty [new repository](https://github.com/new) on Github. 
+Create an empty [new repository](https://github.com/new) on Github.
 Use Data Competence Center as organization. Give it a name that only
 contains alphanumeric characters and optionally `-`. **DO NOT** check any
 boxes under the option `Initialize this repository with`.
