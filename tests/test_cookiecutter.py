@@ -83,7 +83,7 @@ def test_mkdocs(cookies, tmp_path):
 
 def test_not_mkdocs(cookies, tmp_path):
     with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"mkdocs": "n"})
+        result = cookies.bake(extra_context={"mkdocs": "n", "publish_to_pypi": "y"})
         assert result.exit_code == 0
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")

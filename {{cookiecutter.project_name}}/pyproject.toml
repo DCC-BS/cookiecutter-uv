@@ -12,9 +12,14 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "version-pioneer>=0.0.13",
 ]
 
 [project.urls]
@@ -22,11 +27,7 @@ Homepage = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutt
 Repository = "https://github.com/{{cookiecutter.author_github_handle}}/{{cookiecutter.project_name}}"
 Documentation = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutter.project_name}}/"
 
-dependencies = [
-    "version-pioneer>=0.0.13",
-]
-
-[depndency-groups]
+[dependency-groups]
 dev = [
     "coverage>=7.6.12",
     "pytest>=8.3.4",
