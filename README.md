@@ -25,6 +25,14 @@ This is a modern Cookiecutter template that can be used to initiate a Python pro
 
 ---
 
+## Prerequisites
+
+Install [astral uv](https://docs.astral.sh/uv/getting-started/installation/) on your local device.
+
+For winodws you additionaly need those installations:
+- Install [Scoop](https://scoop.sh/)
+- Install make: `scoop install make`
+
 ## Quickstart
 
 On your local machine, navigate to the directory in which you want to
@@ -40,5 +48,5 @@ Follow the prompts to configure your project. Once completed, a new directory co
 
 This project is partially based on [Audrey
 Feldroy\'s](https://github.com/audreyfeldroy)\'s great
-[cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage)
+[cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage) and this [uv cookiecutter fork](https://github.com/fpgmaas/cookiecutter-uv)
 repository.
