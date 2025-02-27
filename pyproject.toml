@@ -25,9 +25,9 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/fpgmaas/cookiecutter-uv"
-Documentation = "https://fpgmaas.github.io/cookiecutter-uv/"
-Homepage = "https://fpgmaas.github.io/cookiecutter-uv/"
+Repository = "https://github.com/DCC-BS/cookiecutter-uv"
+Documentation = "https://dcc-bs.github.io/cookiecutter-uv/"
+Homepage = "https://dcc-bs.github.io/cookiecutter-uv/"
 
 [dependency-groups]
 dev = [
