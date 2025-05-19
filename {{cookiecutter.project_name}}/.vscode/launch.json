@@ -11,7 +11,7 @@
             "module": "fastapi",
             "args": [
                 "dev",
-                "./src/{{cookiecutter.project_name}}/app.py"
+                "./src/{{cookiecutter.project_slug}}/app.py"
             ],
             "jinja": true
         },
