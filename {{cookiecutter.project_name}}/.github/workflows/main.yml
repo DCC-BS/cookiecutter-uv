@@ -5,83 +5,13 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
 
 jobs:
-  quality:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: {% raw %}pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}{% endraw %}
-
-      - name: Set up the environment
-        uses: ./.github/actions/setup-python-env
-
-      - name: Run checks
-        run: make check
-
-  tests-and-type-check:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ "3.10", "3.11", "3.12", "3.13"]
-      fail-fast: false
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up the environment
-        uses: ./.github/actions/setup-python-env
-        with:
-          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
-
-  {% if cookiecutter.codecov == "y" %}
-      - name: Run tests
-        run: |
-            uv run pytest --cov-branch --cov-report=xml --cov --junitxml=junit.xml -o junit_family=legacy
-            uv run coverage xml -o coverage.xml
-  {% else %}
-      - name: Run tests
-        run: uv run pytest tests
-  {% endif %}
-
-      - name: Check typing
-        run: uv run basedpyright
-
-  {% if cookiecutter.codecov == "y" %}
-      - name: Upload coverage reports to Codecov with GitHub Action on Python 3.12
-        uses: codecov/codecov-action@v5
-        if: {% raw %}${{ matrix.python-version == '3.12' }}{% endraw %}
-        with:
-            token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
-            files: coverage.xml
-
-      - name: Upload test results to Codecov
-        if: {% raw %}${{ !cancelled() }}{% endraw %}
-        uses: codecov/test-results-action@v1
-        with:
-          token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
-  {%- endif %}
-
-{%- if cookiecutter.mkdocs == "y" %}
-
-  check-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v6
-
-      - name: Set up the environment
-        uses: ./.github/actions/setup-python-env
-
-      - name: Check if documentation can be built
-        run: uv run mkdocs build -s
-{%- endif %}
+  backend-ci:
+    uses: DCC-BS/ci-workflows/.github/workflows/python-backend-ci.yml@v1
+    with:
+      python_versions: '["3.10","3.11","3.12","3.13"]'
+      quality_python_version: "3.12"
+      check_command: "make check"

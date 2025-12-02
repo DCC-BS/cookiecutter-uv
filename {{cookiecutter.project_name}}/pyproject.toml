@@ -1,6 +1,6 @@
 [project]
 name = "{{cookiecutter.project_name}}"
-dynamic = ["version"]
+version = "0.0.1"
 description = "{{cookiecutter.project_description}}"
 authors = [{name = "Data Competence Center Basel-Stadt", email = "dcc@bs.ch" },{ name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}" }]
 readme = "README.md"
@@ -21,7 +21,6 @@ classifiers = [
 dependencies = [
     "python-dotenv>=1.0.1",
     "structlog>=25.1.0",
-    "version-pioneer>=0.0.13",
 ]
 
 [project.urls]
@@ -35,6 +34,7 @@ dev = [
     "pytest>=8.3.4",
     "pre-commit>=2.20.0",
     "tox-uv>=1.11.3",
+    "pyrefly>=0.4.3",
     {% if cookiecutter.deptry == 'y' %}"deptry>=0.22.0",{% endif %}
     "basedpyright>=1.27.1",
     {% if cookiecutter.codecov == 'y' %}"pytest-cov>=6.0.0",{% endif %}
