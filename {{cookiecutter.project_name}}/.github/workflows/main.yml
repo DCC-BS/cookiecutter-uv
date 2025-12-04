@@ -1,3 +1,4 @@
+{% raw %}
 name: Main
 
 on:
@@ -15,3 +16,4 @@ jobs:
       python_versions: '["3.10","3.11","3.12","3.13"]'
       quality_python_version: "3.12"
       check_command: "make check"
+{% endraw %}
