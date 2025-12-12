@@ -21,7 +21,11 @@ classifiers = [
 dependencies = [
     "python-dotenv>=1.0.1",
     "structlog>=25.1.0",
+    "backend-common",
 ]
+
+[tool.uv.sources]
+backend-common = { git = "https://github.com/DCC-BS/backend-common" }
 
 [project.urls]
 Homepage = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutter.project_name}}/"
@@ -36,7 +40,6 @@ dev = [
     "tox-uv>=1.11.3",
     "pyrefly>=0.4.3",
     {% if cookiecutter.deptry == 'y' %}"deptry>=0.22.0",{% endif %}
-    "basedpyright>=1.27.1",
     {% if cookiecutter.codecov == 'y' %}"pytest-cov>=6.0.0",{% endif %}
     "ruff>=0.9.2",
     {% if cookiecutter.mkdocs == 'y' %}"mkdocs>=1.4.2",
@@ -51,26 +54,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "version-pioneer"
-
-[tool.version-pioneer]
-versionscript = "src/{{cookiecutter.project_slug}}/_version.py"  # Where to "read" the Version-Pioneer script (to execute `get_version_dict()`).
-versionfile-sdist = "src/{{cookiecutter.project_slug}}/_version.py"  # Where to "write" the version dict for sdist.
-versionfile-wheel = "src/{{cookiecutter.project_slug}}/_version.py"  # Where to "write" the version dict for wheel.
-
-[tool.basedpyright]
-include = [
-    "src"
-]
-exclude = [
-    "**/__pycache__",
-    "**/.venv",
-    "**/.*"
-]
-defineConstant = { DEBUG = true }
-pythonVersion = "3.12"
-stubPath = "src/{{cookiecutter.project_slug}}/stubs"
-reportExplicitAny = false
-
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
