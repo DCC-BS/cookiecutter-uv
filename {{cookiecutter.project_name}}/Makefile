@@ -36,6 +36,16 @@ clean-build: ## Clean build artifacts
 	@echo "🚀 Removing build artifacts"
 	@uv run python -c "import shutil; import os; shutil.rmtree('dist') if os.path.exists('dist') else None"
 
+.PHONY: env-example
+env-example: ## Generate .env.example from Configuration model
+	@echo "📄 Generating .env.example"
+	@uv run -m {{cookiecutter.project_slug}}.configuration Configuration
+
+.PHONY: sync-env
+sync-env: ## Sync .env with .env.example
+	@echo "🔄 Syncing .env with .env.example"
+	@uvx --from dcc-backend-common sync-env-with-example
+
 .PHONY: docker up
 docker up: ## Build and run the Docker container
 	@echo "🐳 Running docker compose"

@@ -1,41 +1,17 @@
 {
-  "author": "Yanick Schraner",
-  "author_github_handle": "DCC-BS",
-  "codecov": [
-    "y",
-    "n"
-  ],
-  "deptry": [
-    "y",
-    "n"
-  ],
-  "devcontainer": [
-    "y",
-    "n"
-  ],
-  "dockerfile": [
-    "y",
-    "n"
-  ],
-  "email": "yanick.schraner@bs.ch",
-  "include_github_actions": [
-    "y",
-    "n"
-  ],
-  "mkdocs": [
-    "y",
-    "n"
-  ],
-  "open_source_license": [
-    "MIT",
-    "BSD-3-Clause",
-    "Unlicense"
-  ],
-  "project_description": "This is a template repository for Python projects that use uv for their dependency management.",
-  "project_name": "example-project",
-  "project_slug": "{{cookiecutter.project_name|lower|replace('-', '_')}}",
-  "publish_to_pypi": [
-    "n",
-    "y"
-  ]
+    "author": "Yanick Schraner",
+    "author_github_handle": "DCC-BS",
+    "codecov": ["y", "n"],
+    "deptry": ["y", "n"],
+    "devcontainer": ["y", "n"],
+    "dockerfile": ["y", "n"],
+    "email": "yanick.schraner@bs.ch",
+    "include_github_actions": ["y", "n"],
+    "mkdocs": ["y", "n"],
+    "open_source_license": ["MIT", "BSD-3-Clause", "Unlicense"],
+    "project_description": "This is a template repository for Python projects that use uv for their dependency management.",
+    "project_name": "example-project",
+    "use_pydantic_ai": ["y", "n"],
+    "project_slug": "{{cookiecutter.project_name|lower|replace('-', '_')}}",
+    "publish_to_pypi": ["n", "y"]
 }

@@ -20,10 +20,10 @@ classifiers = [
     "Topic :: Software Development :: Code Generators",
 ]
 dependencies = [
-  "cookiecutter>=2.1.1",
-  "python-dotenv>=1.0.1",
-  "structlog>=25.1.0",
-  "version-pioneer>=0.0.13",
+    "cookiecutter>=2.6.0",
+    "python-dotenv>=1.2.1",
+    "structlog>=25.5.0",
+    "version-pioneer>=0.0.15",
 ]
 
 [project.urls]
