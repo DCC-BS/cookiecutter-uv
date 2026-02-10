@@ -1,6 +1,6 @@
 # Install uv
 FROM python:3.13-alpine AS builder
-COPY --from=ghcr.io/astral-sh/uv:0.9.29 /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.10.2 /uv /bin/uv
 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
