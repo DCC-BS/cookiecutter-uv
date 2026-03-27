@@ -88,6 +88,10 @@ extend_exclude = [
 [tool.deptry.per_rule_ignores]
 DEP002 = ["cookiecutter"]
 
+[tool.uv]
+exclude-newer = "1 week"
+exclude-newer-package = { dcc-backend-common = "P1D" }
+
 [tool.ruff]
 target-version = "py312"
 line-length = 120
