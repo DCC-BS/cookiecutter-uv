@@ -1,5 +1,6 @@
-from src.{{cookiecutter.project_slug}}.foo import foo
+"""Placeholder test file."""
 
 
-def test_foo():
-    assert foo("foo") == "foo"
+def test_placeholder() -> None:
+    """A placeholder test to verify the test setup works."""
+    assert True

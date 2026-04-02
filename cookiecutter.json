@@ -12,6 +12,7 @@
     "project_description": "This is a template repository for Python projects that use uv for their dependency management.",
     "project_name": "example-project",
     "use_pydantic_ai": ["y", "n"],
+    "use_azure_auth": ["y", "n"],
     "project_slug": "{{cookiecutter.project_name|lower|replace('-', '_')}}",
     "publish_to_pypi": ["n", "y"]
 }

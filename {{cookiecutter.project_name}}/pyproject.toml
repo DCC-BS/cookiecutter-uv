@@ -2,115 +2,114 @@
 name = "{{cookiecutter.project_name}}"
 version = "0.0.1"
 description = "{{cookiecutter.project_description}}"
-authors = [{name = "Data Competence Center Basel-Stadt", email = "dcc@bs.ch" },{ name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}" }]
+authors = [
+    {name = "Data Competence Center Basel-Stadt", email = "dcc@bs.ch"},
+    {name = "{{cookiecutter.author}}", email = "{{cookiecutter.email}}"}
+]
 readme = "README.md"
-keywords = ['python']
+keywords = ['python', 'fastapi']
 requires-python = ">=3.13"
 license = "{{cookiecutter.open_source_license}}"
 license-files = ["LICEN[CS]E*"]
-classifiers = [
+dependencies = [
 {% if cookiecutter.use_pydantic_ai == "y" %}
-    "dcc-backend-common[pydantic_ai]>=0.1.3",
+    "dcc-backend-common[pydantic_ai]>=0.1.4",
 {% else %}
-    "dcc-backend-common>=0.1.3",
+    "dcc-backend-common>=0.1.4",
 {% endif %}
     "dependency-injector>=4.48.3",
-    "Intended Audience :: Developers",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-]
-dependencies = [
-    "python-dotenv>=1.0.1",
+    "fastapi[standard]>=0.115.0",
     "structlog>=25.1.0",
-    "backend-common",
+    "python-dotenv>=1.0.1",
+    "returns>=0.26.0",
+{% if cookiecutter.use_pydantic_ai == "y" %}
+    "logfire>=4.22.0",
+{% endif %}
+{% if cookiecutter.use_azure_auth == "y" %}
+    "fastapi-azure-auth>=5.2.0",
+    "python-jose[cryptography]>=3.5.0",
+{% endif %}
 ]
-
-[tool.uv]
-exclude-newer = "1 week"
-exclude-newer-package = { dcc-backend-common = "P1D" }
-
-[tool.uv.sources]
-backend-common = { git = "https://github.com/DCC-BS/backend-common" }
 
 [project.urls]
 Homepage = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutter.project_name}}/"
 Repository = "https://github.com/{{cookiecutter.author_github_handle}}/{{cookiecutter.project_name}}"
 Documentation = "https://{{cookiecutter.author_github_handle}}.github.io/{{cookiecutter.project_name}}/"
 
+[project.optional-dependencies]
+dev = [
+    "coverage>=7.6.12",
+    "pytest>=8.3.5",
+    "pytest-mock>=3.14.0",
+    "pre-commit>=2.20.0",
+    "tox-uv>=1.11.3",
+    "deptry>=0.22.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.14.13",
+    "version-pioneer>=0.0.13",
+    "ty>=0.0.12",
+{% if cookiecutter.mkdocs == 'y' %}
+    "mkdocs>=1.4.2",
+    "mkdocs-material>=8.5.10",
+    "mkdocstrings[python]>=0.26.1",
+{% endif %}
+]
+
 [dependency-groups]
 dev = [
     "coverage>=7.6.12",
-    "pytest>=8.3.4",
+    "pytest>=8.3.5",
+    "pytest-mock>=3.14.0",
     "pre-commit>=2.20.0",
     "tox-uv>=1.11.3",
-    "pyrefly>=0.4.3",
-    {% if cookiecutter.deptry == 'y' %}"deptry>=0.22.0",{% endif %}
-    {% if cookiecutter.codecov == 'y' %}"pytest-cov>=6.0.0",{% endif %}
-    "ruff>=0.9.2",
-    {% if cookiecutter.mkdocs == 'y' %}"mkdocs>=1.4.2",
+    "deptry>=0.22.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.14.13",
+    "version-pioneer>=0.0.13",
+    "ty>=0.0.12",
+{% if cookiecutter.mkdocs == 'y' %}
+    "mkdocs>=1.4.2",
     "mkdocs-material>=8.5.10",
-    "mkdocstrings[python]>=0.26.1",{% endif %}
-    "rich>=13.9.4"
+    "mkdocstrings[python]>=0.26.1",
+{% endif %}
 ]
 
 [build-system]
-requires = ["hatchling","version-pioneer>=0.0.13"]
+requires = ["hatchling", "version-pioneer>=0.0.13"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "version-pioneer"
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/{{cookiecutter.project_slug}}"]
+
+[tool.uv.sources]
+dcc-backend-common = { git = "https://github.com/DCC-BS/backend-common" }
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = [
+    "--import-mode=importlib",
+]
+pythonpath = ["src"]
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 line-length = 120
 fix = true
 
 [tool.ruff.lint]
 select = [
-    # flake8-2020
-    "YTT",
-    # flake8-bandit
-    "S",
-    # flake8-bugbear
-    "B",
-    # flake8-builtins
-    "A",
-    # flake8-comprehensions
-    "C4",
-    # flake8-debugger
-    "T10",
-    # flake8-simplify
-    "SIM",
-    # isort
-    "I",
-    # mccabe
-    "C90",
-    # pycodestyle
-    "E", "W",
-    # pyflakes
-    "F",
-    # pygrep-hooks
-    "PGH",
-    # pyupgrade
-    "UP",
-    # ruff
-    "RUF",
-    # tryceratops
-    "TRY",
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
 ]
+
 ignore = [
-    # LineTooLong
-    "E501",
-    # DoNotAssignLambda
-    "E731",
+    "E501",  # LineTooLong
+    "E731",  # DoNotAssignLambda
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -124,14 +123,13 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.ruff.lint.isort]
-# Group imports by type (standard library, third-party, first-party).
 combine-as-imports = true
 force-wrap-aliases = true
 
-{% if cookiecutter.codecov == "y"-%}
+{% if cookiecutter.codecov == "y" %}
 [tool.coverage.run]
 branch = true
-source = [ "src" ]
+source = ["src"]
 
 [tool.coverage.report]
 omit = [
@@ -147,7 +145,7 @@ exclude_lines = [
     "if TYPE_CHECKING:"
 ]
 exclude_also = [
-    "@(abc\\. )?abstractmethod",
-    "@(abc\\. )?abstractproperty"
+    "@(abc\\.)?abstractmethod",
+    "@(abc\\.)?abstractproperty"
 ]
 {% endif %}

@@ -8,23 +8,58 @@ install: ## Install the virtual environment and install the pre-commit hooks
 check: ## Run code quality tools.
 	@echo "🚀 Checking lock file consistency with 'pyproject.toml'"
 	@uv lock --locked
-	@echo "🚀 Linting code: Running pre-commit"
-	@uv run pre-commit run -a
-	@echo "🚀 Static type checking: Running pyrefly"
-	@uv run pyrefly check ./src/{{cookiecutter.project_slug}}
-{%- if cookiecutter.deptry == 'y' %}
+
+	@echo "🚀 Linting code: Running ruff"
+	@uv run ruff format
+	@uv run ruff check --fix
+
+	@echo "🚀 Static type checking: Running ty"
+	@uv run ty check ./src/{{cookiecutter.project_slug}}
+
+	@echo "🚀 Scanning for secrets: Running varlock"
+	@varlock scan
+
+{% if cookiecutter.deptry == 'y' %}
+.PHONY: deptry
+deptry: ## Check for obsolete dependencies
 	@echo "🚀 Checking for obsolete dependencies: Running deptry"
 	@uv run deptry .
-{%- endif %}
+{% endif %}
+
+.PHONY: env load
+env load: ## Validate the .env file against the Configuration model
+	@echo "🔍 Validating .env file"
+	@pass-cli login
+	./scripts/run-varlock.sh load
 
 .PHONY: test
 test: ## Test the code with pytest
 	@echo "🚀 Testing code: Running pytest"
-{%- if cookiecutter.codecov == "y"%}
-	@uv run python -m pytest --cov --cov-config=pyproject.toml --cov-report=xml
-{%- else %}
 	@uv run python -m pytest --doctest-modules
-{%- endif%}
+
+.PHONY: docker-up
+docker-up: ## Build and run the Docker container
+	@echo "🐳 Running docker compose"
+	@./scripts/run-varlock.sh run -- docker compose up -d
+
+.PHONY: docker-down
+docker-down: ## Stop and remove the Docker container
+	@echo "🐳 Stopping docker compose"
+	@./scripts/run-varlock.sh run -- docker compose down
+
+.PHONY: docker-logs
+docker-logs:
+	@./scripts/run-varlock.sh run -- docker compose logs
+
+.PHONY: run
+run: ## Run the application
+	@echo "🚀 Running the application"
+	./scripts/run-varlock.sh run -- uv run fastapi run ./src/{{cookiecutter.project_slug}}/app.py --port 8000
+
+.PHONY: dev
+dev: ## Run the application in development mode
+	@echo "🚀 Running the application in development mode"
+	./scripts/run-varlock.sh run -- uv run fastapi dev ./src/{{cookiecutter.project_slug}}/app.py --port 8000
 
 .PHONY: build
 build: clean-build ## Build wheel file
@@ -39,50 +74,7 @@ clean-build: ## Clean build artifacts
 .PHONY: env-example
 env-example: ## Generate .env.example from Configuration model
 	@echo "📄 Generating .env.example"
-	@uv run -m {{cookiecutter.project_slug}}.configuration Configuration
-
-.PHONY: sync-env
-sync-env: ## Sync .env with .env.example
-	@echo "🔄 Syncing .env with .env.example"
-	@uvx --from dcc-backend-common sync-env-with-example
-
-.PHONY: docker up
-docker up: ## Build and run the Docker container
-	@echo "🐳 Running docker compose"
-	@docker compose up -d
-
-.PHONY: docker down
-docker down: ## Stop and remove the Docker container
-	@echo "🐳 Stopping docker compose"
-	@docker compose down
-
-.PHONY: dev
-dev: ## Run the application in development mode
-	@echo "🚀 Running the application in development mode"
-	@uv run fastapi dev ./src/{{cookiecutter.project_slug}}/app.py --port 8000
-
-{%- if cookiecutter.publish_to_pypi == "y"%}
-
-.PHONY: publish
-publish: ## Publish a release to PyPI.
-	@echo "🚀 Publishing."
-	@uvx twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
-
-.PHONY: build-and-publish
-build-and-publish: build publish ## Build and publish.
-{%- endif%}
-
-{%- if cookiecutter.mkdocs == "y" %}
-
-.PHONY: docs-test
-docs-test: ## Test if documentation can be built without warnings or errors
-	@uv run mkdocs build -s
-
-.PHONY: docs
-docs: ## Build and serve the documentation
-	@uv run mkdocs serve
-
-{%- endif %}
+	@uv run -m dcc_backend_common.config.generate_env_example src.{{cookiecutter.project_slug}}.utils.configuration Configuration
 
 .PHONY: help
 help:
