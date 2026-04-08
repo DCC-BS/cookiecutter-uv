@@ -19,6 +19,12 @@ check: ## Run code quality tools.
 	@echo "🚀 Scanning for secrets: Running varlock"
 	@varlock scan
 
+.PHONY: env-load
+env-load: ## Validate the .env file against the Configuration model
+	@echo "🔍 Validating .env file"
+	@pass-cli login
+	./scripts/run-varlock.sh load
+
 {% if cookiecutter.deptry == 'y' %}
 .PHONY: deptry
 deptry: ## Check for obsolete dependencies
@@ -26,16 +32,10 @@ deptry: ## Check for obsolete dependencies
 	@uv run deptry .
 {% endif %}
 
-.PHONY: env load
-env load: ## Validate the .env file against the Configuration model
-	@echo "🔍 Validating .env file"
-	@pass-cli login
-	./scripts/run-varlock.sh load
-
 .PHONY: test
 test: ## Test the code with pytest
 	@echo "🚀 Testing code: Running pytest"
-	@uv run python -m pytest --doctest-modules
+	@./scripts/run-varlock.sh uv run python -m pytest --doctest-modules
 
 .PHONY: docker-up
 docker-up: ## Build and run the Docker container
@@ -61,20 +61,10 @@ dev: ## Run the application in development mode
 	@echo "🚀 Running the application in development mode"
 	./scripts/run-varlock.sh run -- uv run fastapi dev ./src/{{cookiecutter.project_slug}}/app.py --port 8000
 
-.PHONY: build
-build: clean-build ## Build wheel file
-	@echo "🚀 Creating wheel file"
-	@uvx --from build pyproject-build --installer uv
-
 .PHONY: clean-build
 clean-build: ## Clean build artifacts
 	@echo "🚀 Removing build artifacts"
 	@uv run python -c "import shutil; import os; shutil.rmtree('dist') if os.path.exists('dist') else None"
-
-.PHONY: env-example
-env-example: ## Generate .env.example from Configuration model
-	@echo "📄 Generating .env.example"
-	@uv run -m dcc_backend_common.config.generate_env_example src.{{cookiecutter.project_slug}}.utils.configuration Configuration
 
 .PHONY: help
 help:
