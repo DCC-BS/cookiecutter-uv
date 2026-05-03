@@ -1,6 +1,6 @@
 services:
   vllm:
-    image: vllm/vllm-openai:v0.17.1
+    image: vllm/vllm-openai:v0.20.1
     container_name: vllm_{{cookiecutter.project_slug}}
     ports:
       - ${LLM_API_PORT}:8000
