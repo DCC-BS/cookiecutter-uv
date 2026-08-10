@@ -1,0 +1,137 @@
+[tools]
+"npm:varlock" = "1.13.0"
+pass-cli = "latest"
+python = "3.13"
+usage = "3.5.6"
+uv = "0.11.31"
+
+[plugins]
+pass-cli = "https://github.com/DCC-BS/mise-proton-pass-cli"
+
+[hooks]
+postinstall = { task = "install" }
+enter = { task = "enter-checks" }
+
+# ── Setup ─────────────────────────────────────────────────────────────────────
+
+[tasks.install]
+description = "Create the virtual environment and install the pre-commit hooks"
+alias = "i"
+sources = ["pyproject.toml", "uv.lock"]
+outputs = [".venv", ".git/hooks/pre-commit"]
+run = [
+    "uv sync",
+    "uv run pre-commit install",
+]
+
+[tasks.env-check]
+description = "Load secrets into the environment via varlock"
+alias = "env"
+depends = ["pass-login"]
+run = "./scripts/run-varlock.sh load"
+
+# ── Run ───────────────────────────────────────────────────────────────────────
+
+[tasks.dev]
+description = "Run the FastAPI dev server with auto-reload"
+alias = "d"
+depends = ["env-check"]
+run = "./scripts/run-varlock.sh run -- uv run fastapi dev ./src/{{cookiecutter.project_slug}}/app.py --port 8000"
+
+[tasks.run]
+description = "Run the production ASGI server (uvicorn)"
+alias = "r"
+depends = ["env-check"]
+run = "./scripts/run-varlock.sh run -- uv run uvicorn {{cookiecutter.project_slug}}.app:app --port 8000 --no-access-log"
+
+# ── Quality ───────────────────────────────────────────────────────────────────
+
+[tasks.check]
+description = "Verify lockfile, format code, lint, and type-check"
+alias = "c"
+run = [
+    "uv lock --locked",
+    "uv run ruff format",
+    "uv run ruff check --fix",
+    "uv run ty check ./src/{{cookiecutter.project_slug}}",
+    "varlock scan",
+]
+
+[tasks.ci-check]
+description = "Verify lockfile, format code, lint, and type-check without modifying files"
+run = [
+    "uv lock --locked",
+    "uv run ruff format --check",
+    "uv run ruff check",
+    "uv run ty check ./src/{{cookiecutter.project_slug}}",
+    "varlock scan",
+]
+
+{% if cookiecutter.deptry == 'y' %}
+[tasks.deptry]
+description = "Check for obsolete dependencies"
+run = "uv run deptry ."
+{% endif %}
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+
+[tasks.test]
+description = "Run the test suite (including doctests)"
+alias = "t"
+env = { APP_MODE = "ci" }
+run = "uv run python -m pytest --doctest-modules"
+
+[tasks.ci]
+description = "Run all CI checks (lock, format, lint, types, tests)"
+depends = ["ci-check", "test"]
+
+{% if cookiecutter.mkdocs == 'y' %}
+# ── Documentation ─────────────────────────────────────────────────────────────
+
+[tasks."docs"]
+description = "Build and serve the MkDocs documentation"
+run = "uv run mkdocs serve"
+
+[tasks."docs:build"]
+description = "Build the MkDocs documentation"
+run = "uv run mkdocs build"
+
+[tasks."docs:deploy"]
+description = "Deploy the MkDocs documentation to GitHub Pages"
+run = "uv run mkdocs gh-deploy"
+{% endif %}
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+
+[tasks."docker:up"]
+description = "Start docker compose services in the background"
+alias = "up"
+depends = ["pass-login"]
+run = "./scripts/run-varlock.sh run -- docker compose up -d"
+
+[tasks."docker:down"]
+description = "Stop and remove docker compose containers"
+alias = "down"
+run = "docker compose down"
+
+[tasks."docker:logs"]
+description = "Tail docker compose logs (follow mode)"
+alias = "logs"
+run = "docker compose logs -f"
+
+# ── Build ─────────────────────────────────────────────────────────────────────
+
+[tasks.build]
+description = "Build the wheel file"
+depends = ["cleanup:build"]
+run = "uvx --from build pyproject-build --installer uv"
+
+[tasks."cleanup:build"]
+description = "Remove build artifacts"
+run = "uv run python -c \"import shutil, os; shutil.rmtree('dist') if os.path.exists('dist') else None\""
+
+# ── Environment ───────────────────────────────────────────────────────────────
+
+[tasks."env-example"]
+description = "Generate .env.example from the Configuration model"
+run = "uv run -m dcc_backend_common.config.generate_env_example src.{{cookiecutter.project_slug}}.utils.configuration Configuration"

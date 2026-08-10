@@ -30,7 +30,7 @@ def test_using_pytest(cookies, tmp_path):
         # Install the uv environment and run the tests.
         with run_within_dir(str(result.project_path)):
             assert subprocess.check_call(shlex.split("uv sync")) == 0
-            assert subprocess.check_call(shlex.split("uv run make test")) == 0
+            assert subprocess.check_call(shlex.split("uv run python -m pytest --doctest-modules")) == 0
 
 
 def test_devcontainer(cookies, tmp_path):
@@ -57,7 +57,7 @@ def test_cicd_contains_pypi_secrets(cookies, tmp_path):
         assert result.exit_code == 0
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")
         assert file_contains_text(f"{result.project_path}/.github/workflows/on-release-main.yml", "PYPI_TOKEN")
-        assert file_contains_text(f"{result.project_path}/Makefile", "build-and-publish")
+        assert file_contains_text(f"{result.project_path}/mise.toml", "build")
 
 
 def test_dont_publish(cookies, tmp_path):
@@ -77,7 +77,7 @@ def test_mkdocs(cookies, tmp_path):
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")
         assert file_contains_text(f"{result.project_path}/.github/workflows/on-release-main.yml", "mkdocs gh-deploy")
-        assert file_contains_text(f"{result.project_path}/Makefile", "docs:")
+        assert file_contains_text(f"{result.project_path}/mise.toml", "docs")
         assert os.path.isdir(f"{result.project_path}/docs")
 
 
@@ -90,7 +90,7 @@ def test_not_mkdocs(cookies, tmp_path):
         assert not file_contains_text(
             f"{result.project_path}/.github/workflows/on-release-main.yml", "mkdocs gh-deploy"
         )
-        assert not file_contains_text(f"{result.project_path}/Makefile", "docs:")
+        assert not file_contains_text(f"{result.project_path}/mise.toml", "docs")
         assert not os.path.isdir(f"{result.project_path}/docs")
 
 

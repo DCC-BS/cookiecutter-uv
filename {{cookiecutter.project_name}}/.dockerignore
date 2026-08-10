@@ -3,7 +3,6 @@
 examples
 tests
 .env.example
-Makefile
 .git
 .gitignore
 tests
