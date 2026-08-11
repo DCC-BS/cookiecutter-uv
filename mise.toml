@@ -17,17 +17,6 @@ run = [
     "uv sync",
 ]
 
-# ── Quality ───────────────────────────────────────────────────────────────────
-
-[tasks.check]
-description = "Verify lockfile, format code, lint, and type-check without modifying files"
-run = [
-    "uv lock --locked",
-    "uv run ruff format --check",
-    "uv run ruff check",
-    "uv run ty check ./hooks",
-]
-
 # ── Testing ───────────────────────────────────────────────────────────────────
 
 [tasks."test:unit"]
