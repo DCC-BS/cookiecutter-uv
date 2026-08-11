@@ -7,7 +7,7 @@ from dcc_backend_common.fastapi_health_probes.router import ServiceDependency
 from dcc_backend_common.logger import get_logger, init_logger
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from structlog.stdlib import BoundLogger
+
 
 from {{cookiecutter.project_slug}}.container import Container
 from {{cookiecutter.project_slug}}.routers import example_router
@@ -16,6 +16,12 @@ from {{cookiecutter.project_slug}}.utils.middleware import add_logging_middlewar
 {%- if cookiecutter.use_azure_auth == "y" %}
 from {{cookiecutter.project_slug}}.utils.auth import AuthSchema
 {%- endif %}
+
+config = {} # TODO load your config here
+
+service_dependencies: list[ServiceDependency] = [
+    {"name": "llm", "health_check_url": config.llm_health_check_url, "api_key": config.llm_api_key},
+]
 
 
 def create_app() -> FastAPI:
@@ -80,6 +86,12 @@ def create_app() -> FastAPI:
         },
 {%- endif %}
         lifespan=lifespan,
+    logger = get_logger("app")
+    logger.info("Starting {{cookiecutter.project_slug}} application")
+
+    # Initialize FastAPI app
+    app = FastAPI(
+        title="{{cookiecutter.project_slug}} API",
     )
 
     app.include_router(health_probe_router(service_dependencies))
@@ -106,6 +118,5 @@ def create_app() -> FastAPI:
 
     logger.info("API setup complete")
     return app
-
 
 app = create_app()
