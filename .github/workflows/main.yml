@@ -14,7 +14,7 @@ env:
 
 jobs:
     backend-ci:
-        uses: DCC-BS/ci-workflows/.github/workflows/ci.yml@b0f3abf4e131b4834279fb3ba3b4ecf366c52fdc# v10
+        uses: DCC-BS/ci-workflows/.github/workflows/ci.yml@b0f3abf4e131b4834279fb3ba3b4ecf366c52fdc #v10
         with:
             python_versions: '["3.14"]'
             quality_python_version: "3.14"
