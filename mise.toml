@@ -19,7 +19,7 @@ run = [
 
 # ── Quality ───────────────────────────────────────────────────────────────────
 
-[tasks.ci-check]
+[tasks.check]
 description = "Verify lockfile, format code, lint, and type-check without modifying files"
 run = [
     "uv lock --locked",

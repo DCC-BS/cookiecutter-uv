@@ -15,3 +15,5 @@ env:
 jobs:
     backend-ci:
         uses: DCC-BS/ci-workflows/.github/workflows/ci.yml@a46e69bb86a790352d822ab122e187c13597593a #v10
+        with:
+            run-build: false
