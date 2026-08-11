@@ -28,7 +28,7 @@ run = [
 description = "Load secrets into the environment via varlock"
 alias = "env"
 depends = ["pass-login"]
-run = "./scripts/run-varlock.sh load"
+run = "varlock load"
 
 # ── Run ───────────────────────────────────────────────────────────────────────
 
@@ -36,13 +36,13 @@ run = "./scripts/run-varlock.sh load"
 description = "Run the FastAPI dev server with auto-reload"
 alias = "d"
 depends = ["env-check"]
-run = "./scripts/run-varlock.sh run -- uv run fastapi dev ./src/{{cookiecutter.project_slug}}/app.py --port 8000"
+run = "varlock run -- uv run fastapi dev ./src/{{cookiecutter.project_slug}}/app.py --port 8000"
 
 [tasks.run]
 description = "Run the production ASGI server (uvicorn)"
 alias = "r"
 depends = ["env-check"]
-run = "./scripts/run-varlock.sh run -- uv run uvicorn {{cookiecutter.project_slug}}.app:app --port 8000 --no-access-log"
+run = "varlock run -- uv run uvicorn {{cookiecutter.project_slug}}.app:app --port 8000 --no-access-log"
 
 # ── Quality ───────────────────────────────────────────────────────────────────
 
@@ -75,7 +75,7 @@ run = "uv run deptry ."
 
 # ── Testing ───────────────────────────────────────────────────────────────────
 
-[tasks.test]
+[tasks."test:unit"]
 description = "Run the test suite (including doctests)"
 alias = "t"
 env = { APP_MODE = "ci" }
@@ -83,7 +83,7 @@ run = "uv run python -m pytest --doctest-modules"
 
 [tasks.ci]
 description = "Run all CI checks (lock, format, lint, types, tests)"
-depends = ["ci-check", "test"]
+depends = ["ci-check", "test:unit"]
 
 {% if cookiecutter.mkdocs == 'y' %}
 # ── Documentation ─────────────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ run = "uv run mkdocs gh-deploy"
 description = "Start docker compose services in the background"
 alias = "up"
 depends = ["pass-login"]
-run = "./scripts/run-varlock.sh run -- docker compose up -d"
+run = "varlock run -- docker compose up -d"
 
 [tasks."docker:down"]
 description = "Stop and remove docker compose containers"
