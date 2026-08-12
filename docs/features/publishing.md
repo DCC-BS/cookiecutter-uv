@@ -21,9 +21,9 @@ field for the Github secret in your first tab, and you're all set!
 
 ## Publishing from your local machine
 
-It is also possible to release locally, although it is not recommended.
+It is also possible to build the distribution locally, although it is not recommended.
 To do so, run:
 
 ```bash
-make build-and-publish
+mise run build
 ```

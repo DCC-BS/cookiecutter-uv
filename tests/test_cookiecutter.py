@@ -30,7 +30,7 @@ def test_using_pytest(cookies, tmp_path):
         # Install the uv environment and run the tests.
         with run_within_dir(str(result.project_path)):
             assert subprocess.check_call(shlex.split("uv sync")) == 0
-            assert subprocess.check_call(shlex.split("uv run make test")) == 0
+            assert subprocess.check_call(shlex.split("uv run python -m pytest --doctest-modules")) == 0
 
 
 def test_devcontainer(cookies, tmp_path):
@@ -55,19 +55,14 @@ def test_cicd_contains_pypi_secrets(cookies, tmp_path):
     with run_within_dir(tmp_path):
         result = cookies.bake(extra_context={"publish_to_pypi": "y"})
         assert result.exit_code == 0
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")
-        assert file_contains_text(f"{result.project_path}/.github/workflows/on-release-main.yml", "PYPI_TOKEN")
-        assert file_contains_text(f"{result.project_path}/Makefile", "build-and-publish")
+        assert file_contains_text(f"{result.project_path}/mise.toml", "build")
 
 
 def test_dont_publish(cookies, tmp_path):
     with run_within_dir(tmp_path):
         result = cookies.bake(extra_context={"publish_to_pypi": "n"})
         assert result.exit_code == 0
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")
-        assert not file_contains_text(
-            f"{result.project_path}/.github/workflows/on-release-main.yml", "make build-and-publish"
-        )
+        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
 
 
 def test_mkdocs(cookies, tmp_path):
@@ -75,10 +70,8 @@ def test_mkdocs(cookies, tmp_path):
         result = cookies.bake(extra_context={"mkdocs": "y"})
         assert result.exit_code == 0
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")
-        assert file_contains_text(f"{result.project_path}/.github/workflows/on-release-main.yml", "mkdocs gh-deploy")
-        assert file_contains_text(f"{result.project_path}/Makefile", "docs:")
-        assert os.path.isdir(f"{result.project_path}/docs")
+        assert file_contains_text(f"{result.project_path}/mise.toml", "docs")
+        assert os.path.isfile(f"{result.project_path}/mkdocs.yml")
 
 
 def test_not_mkdocs(cookies, tmp_path):
@@ -86,11 +79,8 @@ def test_not_mkdocs(cookies, tmp_path):
         result = cookies.bake(extra_context={"mkdocs": "n", "publish_to_pypi": "y"})
         assert result.exit_code == 0
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "on-release-main.yml")
-        assert not file_contains_text(
-            f"{result.project_path}/.github/workflows/on-release-main.yml", "mkdocs gh-deploy"
-        )
-        assert not file_contains_text(f"{result.project_path}/Makefile", "docs:")
+        assert not file_contains_text(f"{result.project_path}/mise.toml", "docs")
+        assert not os.path.isfile(f"{result.project_path}/mkdocs.yml")
         assert not os.path.isdir(f"{result.project_path}/docs")
 
 
@@ -122,7 +112,6 @@ def test_codecov(cookies, tmp_path):
         assert result.exit_code == 0
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
         assert os.path.isfile(f"{result.project_path}/codecov.yaml")
-        assert os.path.isfile(f"{result.project_path}/.github/workflows/validate-codecov-config.yml")
 
 
 def test_not_codecov(cookies, tmp_path):
@@ -131,18 +120,17 @@ def test_not_codecov(cookies, tmp_path):
         assert result.exit_code == 0
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
         assert not os.path.isfile(f"{result.project_path}/codecov.yaml")
-        assert not os.path.isfile(f"{result.project_path}/.github/workflows/validate-codecov-config.yml")
 
 
 def test_remove_release_workflow(cookies, tmp_path):
     with run_within_dir(tmp_path):
         result = cookies.bake(extra_context={"publish_to_pypi": "n", "mkdocs": "y"})
         assert result.exit_code == 0
-        assert os.path.isfile(f"{result.project_path}/.github/workflows/on-release-main.yml")
+        assert os.path.isfile(f"{result.project_path}/.github/workflows/main.yml")
 
-        result = cookies.bake(extra_context={"publish_to_pypi": "n", "mkdocs": "n"})
+        result = cookies.bake(extra_context={"include_github_actions": "n"})
         assert result.exit_code == 0
-        assert not os.path.isfile(f"{result.project_path}/.github/workflows/on-release-main.yml")
+        assert not os.path.isfile(f"{result.project_path}/.github/workflows/main.yml")
 
 
 def test_license_mit(cookies, tmp_path):

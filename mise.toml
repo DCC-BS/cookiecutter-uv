@@ -1,0 +1,26 @@
+[tools]
+python = "3.13"
+usage = "3.5.6"
+uv = "0.11.31"
+
+[hooks]
+postinstall = { task = "install" }
+
+# ── Setup ─────────────────────────────────────────────────────────────────────
+
+[tasks.install]
+description = "Create the virtual environment and install the pre-commit hooks"
+alias = "i"
+sources = ["pyproject.toml", "uv.lock"]
+outputs = [".venv"]
+run = [
+    "uv sync",
+]
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+
+[tasks."test:unit"]
+description = "Run the test suite (including doctests)"
+alias = "t"
+env = { APP_MODE = "ci" }
+run = "uv run python -m pytest --doctest-modules"

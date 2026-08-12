@@ -16,11 +16,10 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.9.9"
+    rev: "v0.15.10"
     hooks:
       - id: ruff
-        args: [--exit-non-zero-on-fix]
-        types_or: [ python, pyi ]
-        args: [ --fix, --exit-zero ]
+        args: [--fix, --exit-zero]
+        types_or: [python, pyi]
       - id: ruff-format
-        types_or: [ python, pyi ]
+        types_or: [python, pyi]
