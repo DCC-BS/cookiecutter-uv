@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from {{cookiecutter.project_slug}}.utils.configuration import Configuration
+from {{cookiecutter.project_slug}}.utils.app_config import AppConfig
 
 
 class AuthSettings(BaseModel):
@@ -10,7 +10,7 @@ class AuthSettings(BaseModel):
     tenant_id: str = ""
     scope_description: str = ""
 
-    def __init__(self, config: Configuration):
+    def __init__(self, config: AppConfig):
         super().__init__(
             app_client_id=config.azure_client_id,
             tenant_id=config.azure_tenant_id,

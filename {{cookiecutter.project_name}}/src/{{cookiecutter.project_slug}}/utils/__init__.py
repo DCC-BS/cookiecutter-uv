@@ -1,11 +1,11 @@
-from {{cookiecutter.project_slug}}.utils.configuration import Configuration
+from {{cookiecutter.project_slug}}.utils.app_config import AppConfig
 {%- if cookiecutter.use_azure_auth == "y" %}
 from {{cookiecutter.project_slug}}.utils.auth import AuthSchema, create_auth_scheme
 from {{cookiecutter.project_slug}}.utils.auth_settings import AuthSettings
 {%- endif %}
 
 __all__ = [
-    "Configuration",
+    "AppConfig",
 {%- if cookiecutter.use_azure_auth == "y" %}
     "AuthSchema",
     "create_auth_scheme",

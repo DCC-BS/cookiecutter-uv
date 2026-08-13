@@ -13,9 +13,9 @@ license = "{{cookiecutter.open_source_license}}"
 license-files = ["LICEN[CS]E*"]
 dependencies = [
 {% if cookiecutter.use_pydantic_ai == "y" %}
-    "dcc-backend-common[pydantic_ai]>=0.1.4",
+    "dcc-backend-common[pydantic_ai]>=0.1.19",
 {% else %}
-    "dcc-backend-common>=0.1.4",
+    "dcc-backend-common>=0.1.19",
 {% endif %}
     "dependency-injector>=4.48.3",
     "fastapi[standard]>=0.115.0",
@@ -43,16 +43,10 @@ dev = [
     "pytest-mock>=3.14.0",
     "pre-commit>=2.20.0",
     "tox-uv>=1.11.3",
-    "deptry>=0.22.0",
     "pytest-cov>=6.0.0",
     "ruff>=0.14.13",
     "version-pioneer>=0.0.13",
     "ty>=0.0.12",
-{% if cookiecutter.mkdocs == 'y' %}
-    "mkdocs>=1.4.2",
-    "mkdocs-material>=8.5.10",
-    "mkdocstrings[python]>=0.26.1",
-{% endif %}
 ]
 
 [dependency-groups]
@@ -62,16 +56,10 @@ dev = [
     "pytest-mock>=3.14.0",
     "pre-commit>=2.20.0",
     "tox-uv>=1.11.3",
-    "deptry>=0.22.0",
     "pytest-cov>=6.0.0",
     "ruff>=0.14.13",
     "version-pioneer>=0.0.13",
     "ty>=0.0.12",
-{% if cookiecutter.mkdocs == 'y' %}
-    "mkdocs>=1.4.2",
-    "mkdocs-material>=8.5.10",
-    "mkdocstrings[python]>=0.26.1",
-{% endif %}
 ]
 
 [build-system]
@@ -159,27 +147,3 @@ line-ending = "auto"
 [tool.ruff.lint.isort]
 combine-as-imports = true
 force-wrap-aliases = true
-
-{% if cookiecutter.codecov == "y" %}
-[tool.coverage.run]
-branch = true
-source = ["src"]
-
-[tool.coverage.report]
-omit = [
-    "*/tests/*",
-    "*/.venv/*"
-]
-skip_empty = true
-exclude_lines = [
-    "raise NotImplementedError",
-    "raise NotImplemented",
-    "no cov",
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:"
-]
-exclude_also = [
-    "@(abc\\.)?abstractmethod",
-    "@(abc\\.)?abstractproperty"
-]
-{% endif %}

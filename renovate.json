@@ -45,9 +45,7 @@
         "devDependencies"
       ],
       "matchPackageNames": [
-        "ruff",
-        "mkdocs",
-        "mkdocs-material"
+        "ruff"
       ]
     },
     {

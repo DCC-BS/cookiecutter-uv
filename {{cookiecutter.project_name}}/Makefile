@@ -20,17 +20,10 @@ check: ## Run code quality tools.
 	@varlock scan
 
 .PHONY: env-load
-env-load: ## Validate the .env file against the Configuration model
+env-load: ## Validate the .env file against the AppConfig model
 	@echo "🔍 Validating .env file"
 	@pass-cli login
 	./scripts/run-varlock.sh load
-
-{% if cookiecutter.deptry == 'y' %}
-.PHONY: deptry
-deptry: ## Check for obsolete dependencies
-	@echo "🚀 Checking for obsolete dependencies: Running deptry"
-	@uv run deptry .
-{% endif %}
 
 .PHONY: test
 test: ## Test the code with pytest

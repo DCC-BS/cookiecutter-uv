@@ -45,8 +45,6 @@ check: ## Run code quality tools.
 	@uv run pre-commit run -a
 	@echo "🚀 Static type checking: Running basedpyright"
 	@uv run basedpyright
-	@echo "🚀 Checking for obsolete dependencies: Running deptry"
-	@uv run deptry "src"
 
 .PHONY: test
 test: ## Test the code with pytest.
@@ -72,14 +70,6 @@ publish: ## Publish a release to PyPI.
 
 .PHONY: build-and-publish
 build-and-publish: build publish ## Build and publish.
-
-.PHONY: docs-test
-docs-test: ## Test if documentation can be built without warnings or errors
-	@uv run mkdocs build -s
-
-.PHONY: docs
-docs: ## Build and serve the documentation
-	@uv run mkdocs serve
 
 .PHONY: help
 help:

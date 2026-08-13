@@ -27,7 +27,7 @@ def get_pseudonymized_user_id(user: User | None, secret_key: str) -> str:
     if user_id is None:
         raise ValueError("User ID (oid or sub) not found in user object")
     message = user_id.encode("utf-8")
-    if not secret_key or secret_key == "none":
+    if not secret_key or secret_key == "none":  # noqa: S105
         raise ValueError("HMAC secret is not set")
     signature = hmac.new(secret_key.encode("utf-8"), message, hashlib.sha256).hexdigest()
     return signature

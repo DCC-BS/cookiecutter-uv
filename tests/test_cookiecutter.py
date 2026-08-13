@@ -65,25 +65,6 @@ def test_dont_publish(cookies, tmp_path):
         assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
 
 
-def test_mkdocs(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"mkdocs": "y"})
-        assert result.exit_code == 0
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-        assert file_contains_text(f"{result.project_path}/mise.toml", "docs")
-        assert os.path.isfile(f"{result.project_path}/mkdocs.yml")
-
-
-def test_not_mkdocs(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"mkdocs": "n", "publish_to_pypi": "y"})
-        assert result.exit_code == 0
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-        assert not file_contains_text(f"{result.project_path}/mise.toml", "docs")
-        assert not os.path.isfile(f"{result.project_path}/mkdocs.yml")
-        assert not os.path.isdir(f"{result.project_path}/docs")
-
-
 def test_tox(cookies, tmp_path):
     with run_within_dir(tmp_path):
         result = cookies.bake()
@@ -106,25 +87,9 @@ def test_not_dockerfile(cookies, tmp_path):
         assert not os.path.isfile(f"{result.project_path}/Dockerfile")
 
 
-def test_codecov(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake()
-        assert result.exit_code == 0
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-        assert os.path.isfile(f"{result.project_path}/codecov.yaml")
-
-
-def test_not_codecov(cookies, tmp_path):
-    with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"codecov": "n"})
-        assert result.exit_code == 0
-        assert is_valid_yaml(result.project_path / ".github" / "workflows" / "main.yml")
-        assert not os.path.isfile(f"{result.project_path}/codecov.yaml")
-
-
 def test_remove_release_workflow(cookies, tmp_path):
     with run_within_dir(tmp_path):
-        result = cookies.bake(extra_context={"publish_to_pypi": "n", "mkdocs": "y"})
+        result = cookies.bake(extra_context={"publish_to_pypi": "n"})
         assert result.exit_code == 0
         assert os.path.isfile(f"{result.project_path}/.github/workflows/main.yml")
 

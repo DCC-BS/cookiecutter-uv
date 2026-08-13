@@ -67,12 +67,6 @@ run = [
     "varlock scan",
 ]
 
-{% if cookiecutter.deptry == 'y' %}
-[tasks.deptry]
-description = "Check for obsolete dependencies"
-run = "uv run deptry ."
-{% endif %}
-
 # ── Testing ───────────────────────────────────────────────────────────────────
 
 [tasks."test:unit"]
@@ -84,22 +78,6 @@ run = "uv run python -m pytest --doctest-modules"
 [tasks.ci]
 description = "Run all CI checks (lock, format, lint, types, tests)"
 depends = ["ci-check", "test:unit"]
-
-{% if cookiecutter.mkdocs == 'y' %}
-# ── Documentation ─────────────────────────────────────────────────────────────
-
-[tasks."docs"]
-description = "Build and serve the MkDocs documentation"
-run = "uv run mkdocs serve"
-
-[tasks."docs:build"]
-description = "Build the MkDocs documentation"
-run = "uv run mkdocs build"
-
-[tasks."docs:deploy"]
-description = "Deploy the MkDocs documentation to GitHub Pages"
-run = "uv run mkdocs gh-deploy"
-{% endif %}
 
 # ── Docker ────────────────────────────────────────────────────────────────────
 
@@ -129,9 +107,3 @@ run = "uvx --from build pyproject-build --installer uv"
 [tasks."cleanup:build"]
 description = "Remove build artifacts"
 run = "uv run python -c \"import shutil, os; shutil.rmtree('dist') if os.path.exists('dist') else None\""
-
-# ── Environment ───────────────────────────────────────────────────────────────
-
-[tasks."env-example"]
-description = "Generate .env.example from the Configuration model"
-run = "uv run -m dcc_backend_common.config.generate_env_example src.{{cookiecutter.project_slug}}.utils.configuration Configuration"

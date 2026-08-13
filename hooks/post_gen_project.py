@@ -31,15 +31,8 @@ if __name__ == "__main__":
     if "{{cookiecutter.include_github_actions}}" != "y":
         remove_dir(".github")
 
-    if "{{cookiecutter.mkdocs}}" != "y":
-        remove_dir("docs")
-        remove_file("mkdocs.yml")
-
     if "{{cookiecutter.dockerfile}}" != "y":
         remove_file("Dockerfile")
-
-    if "{{cookiecutter.codecov}}" != "y":
-        remove_file("codecov.yaml")
 
     if "{{cookiecutter.devcontainer}}" != "y":
         remove_dir(".devcontainer")
@@ -55,3 +48,10 @@ if __name__ == "__main__":
     if "{{cookiecutter.open_source_license}}" == "Unlicense":
         remove_file("LICENSE_MIT")
         remove_file("LICENSE_BSD")
+
+    if "{{cookiecutter.use_azure_auth}}" != "y":
+        remove_file("src/{{cookiecutter.project_slug}}/utils/auth.py")
+        remove_file("src/{{cookiecutter.project_slug}}/utils/auth_settings.py")
+        remove_file("src/{{cookiecutter.project_slug}}/utils/usage_tracking.py")
+        remove_file("src/{{cookiecutter.project_slug}}/services/azure_service.py")
+        remove_file(".env.azure.schema")
