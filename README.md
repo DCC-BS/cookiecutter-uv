@@ -1,9 +1,3 @@
-<p align="center">
-  <img width="600" src="https://raw.githubusercontent.com/DCC-BS/cookiecutter-uv/main/static/images/pipeline.png">
-</p style = "margin-bottom: 2rem;">
-
----
-
 [![Build status](https://img.shields.io/github/actions/workflow/status/DCC-BS/cookiecutter-uv/main.yml?branch=main)](https://github.com/DCC-BS/cookiecutter-uv/actions/workflows/main.yml?query=branch%3Amain)
 [![Supported Python versions](https://img.shields.io/badge/python-3.10_%7C_3.11_%7C_3.12_%7C_3.13-blue?labelColor=grey&color=blue)](https://github.com/DCC-BS/cookiecutter-uv/blob/main/pyproject.toml)
 [![License](https://img.shields.io/github/license/DCC-BS/cookiecutter-uv)](https://img.shields.io/github/license/DCC-BS/cookiecutter-uv)
