@@ -76,7 +76,9 @@ packages = ["src/{{cookiecutter.project_slug}}"]
 dcc-backend-common = { git = "https://github.com/DCC-BS/backend-common" }
 
 [tool.uv]
+# Supply-chain cooldown: uv only uses distributions uploaded at least 7 days ago.
 exclude-newer = "P7D"
+# dcc-backend-common: our own package(s), always current (permanent).
 exclude-newer-package = { dcc-backend-common = "P0D" }
 
 [tool.pytest.ini_options]
