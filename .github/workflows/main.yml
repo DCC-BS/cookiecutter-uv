@@ -14,7 +14,6 @@ env:
 
 jobs:
     backend-ci:
+        # ci.yml v10 has no run-build/run-check inputs (they made every run end in
+        # startup_failure); it skips build/check on its own when the mise tasks don't exist.
         uses: DCC-BS/ci-workflows/.github/workflows/ci.yml@2bfad28c27c02b4fe13dbadeb2b8ae970b2fae15 #v10
-        with:
-            run-build: false
-            run-check: false
